@@ -1,0 +1,33 @@
+﻿@model MovieViewModel
+
+<form asp-controller="DetailsMovie" asp-action="OnEditPost" method="post">
+	<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+	<div class="form-group">
+		<label for="Title">Title:</label>
+		<span asp-validation-for="Title" class="text-danger"></span>
+		<input type="text" name="Title" value="@Model.Title" placeholder="Title" asp-for="Title" class="form-control"/>
+	</div>
+	<div class="form-group">
+		<label for="Year">Year:</label>
+		<span asp-validation-for="Year" class="text-danger"></span>
+		<input type="text" name="Year" value="@Model.Year" placeholder="Year" asp-for="Year" class="form-control"/>
+	</div>
+	<div class="form-group">
+		<label for="Genre">Genres:</label>
+		<span asp-validation-for="Genre" class="text-danger"></span>
+		<select class="form-control" asp-for="Genre">
+			@foreach (var genre in ViewBag.Genres)
+			{
+				if (genre.Name == Model.Genre)
+				{
+					<option value="@genre.Id" selected>@genre.Name</option>
+				}
+				else
+				{
+					<option value="@genre.Id">@genre.Name</option>
+				}
+			}
+		</select>
+	</div><br />
+	<button type="submit" class="btn btn-primary" name="Save">Save</button>
+</form>

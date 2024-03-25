@@ -1,0 +1,79 @@
+﻿@model List<MovieViewModel>
+
+<h4>Information about all Movies</h4><br />
+
+<h4>Movies count: @Model.Count</h4>
+
+@if (ViewData["SelectedMovie"] != null)
+{
+	<br /><h5>Selected Movie Details</h5>
+	var selectedMovie = ViewData["SelectedMovie"] as MovieViewModel;
+	<p>Title: <strong>@selectedMovie.Title</strong></p>
+	<p>Year: <strong>@selectedMovie.Year</strong></p>
+	<p>Genre: <strong>@selectedMovie.Genre</strong></p>
+}
+else if (ViewData["DeletedMovie"] != null)
+{
+	<br /><h5>Deleted Movie Details</h5>
+	var deletedMovie = ViewData["DeletedMovie"] as MovieViewModel;
+	<p>Title: <strong>@deletedMovie.Title</strong></p>
+	<p>Year: <strong>@deletedMovie.Year</strong></p>
+	<p>Genre: <strong>@deletedMovie.Genre</strong></p>
+}
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model[0].Title)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model[0].Year)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model[0].Genre)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach(var movie in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(item => movie.Title)
+				</td>
+				<td>
+					@Html.DisplayFor(item => movie.Year)
+				</td>
+				<td>
+					@Html.DisplayFor(item => movie.Genre)
+				</td>
+				<td>
+					<div class="btn-group">
+						<form asp-controller="DetailsMovie" asp-action="Select" method="post" class="form-inline">
+							<input type="hidden" name="Title" value="@movie.Title" />
+							<input type="hidden" name="Year" value="@movie.Year" />
+							<input type="hidden" name="Genre" value="@movie.Genre" />
+							<button type="submit" class="btn btn-primary">Select</button>
+						</form>
+						<div style="margin-left: 5px; margin-right: 5px;"></div>
+						<form asp-controller="DetailsMovie" asp-action="Edit" method="post" class="form-inline">
+							<input type="hidden" name="Title" value="@movie.Title" />
+							<input type="hidden" name="Year" value="@movie.Year" />
+							<input type="hidden" name="Genre" value="@movie.Genre" />
+							<button type="submit" class="btn btn-warning">Edit </button>
+						</form>
+						<div style="margin-left: 5px; margin-right: 5px;"></div>
+						<form asp-controller="DetailsMovie" asp-action="Delete" method="post" class="form-inline">
+							<input type="hidden" name="Title" value="@movie.Title" />
+							<input type="hidden" name="Year" value="@movie.Year" />
+							<input type="hidden" name="Genre" value="@movie.Genre" />
+							<button type="submit" class="btn btn-danger">Delete</button>
+						</form>
+					</div>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
